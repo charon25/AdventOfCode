@@ -40,7 +40,7 @@ class File:
         return f'file {self.name}:{self.size}'
 
 
-with open('inputs/7.txt', 'r') as fi:
+with open('inputs/07.txt', 'r') as fi:
     lines = fi.read().splitlines()
 
 root = Directory(None, '/')

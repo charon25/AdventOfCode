@@ -1,4 +1,4 @@
-with open('inputs/1.txt', 'r') as fi:
+with open('inputs/01.txt', 'r') as fi:
     lines = fi.read().splitlines()
 
 calories = [0]

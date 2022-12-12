@@ -1,6 +1,6 @@
 import re
 
-with open('inputs/5.txt', 'r') as fi:
+with open('inputs/05.txt', 'r') as fi:
     lines = fi.read().splitlines()
 
 stacks_count = (len(lines[0]) + 1) // 4

@@ -1,4 +1,4 @@
-with open('inputs/6.txt', 'r') as fi:
+with open('inputs/06.txt', 'r') as fi:
     text = fi.read()
 
 found_start_of_packet = False

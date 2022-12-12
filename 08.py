@@ -1,4 +1,4 @@
-with open('inputs/8.txt', 'r') as fi:
+with open('inputs/08.txt', 'r') as fi:
     lines = fi.read().splitlines()
 
 WIDTH = len(lines[0])

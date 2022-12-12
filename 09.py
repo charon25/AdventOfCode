@@ -1,4 +1,4 @@
-with open('inputs/9.txt', 'r') as fi:
+with open('inputs/09.txt', 'r') as fi:
     lines = fi.read().splitlines()
 
 def is_too_far(hx, hy, tx, ty) -> bool:
