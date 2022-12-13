@@ -1,4 +1,4 @@
-with open('inputs/03.txt', 'r') as fi:
+with open('../inputs/03.txt', 'r') as fi:
     lines = fi.read().splitlines()
 
 def get_priority(c: str):

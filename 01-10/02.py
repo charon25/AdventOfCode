@@ -1,4 +1,4 @@
-with open('inputs/02.txt', 'r') as fi:
+with open('../inputs/02.txt', 'r') as fi:
     lines = fi.read().splitlines()
 
 SCORES = {'X': 1, 'Y': 2, 'Z': 3}

@@ -1,4 +1,4 @@
-with open('inputs/10.txt', 'r') as fi:
+with open('../inputs/10.txt', 'r') as fi:
     lines = fi.read().splitlines()
 
 # Part 1
