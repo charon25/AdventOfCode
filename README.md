@@ -1,5 +1,10 @@
-# Advent of Code 2022
+# Advent of Code
 
-This repo contains my Python solutions to the [2022 Advent of Code](https://adventofcode.com/2022) problems.
+This repo keeps track of all my attempts at the [Advent of Code](https://adventofcode.com/) programming puzzles.
 
-Everything was done using Python 3.11.0 (except for some type hints, it should be compatible with previous versions as well).
+| Year | Language                          | Results |
+|------|-----------------------------------|---------|
+| 2020 | Visual Basic .NET<br/>(lost code) | 25 ⭐    |
+| 2021 | Python                            | 41 ⭐    |
+| 2022 | Python                            | 29 ⭐    |
+| 2024 | Java                              | TBD     |
