@@ -27,6 +27,18 @@ public class Point {
 		return minX <= m_x && minY <= m_y && m_x < maxX && m_y < maxY;
 	}
 
+	public Point difference(final Point other) {
+		return new Point(m_x - other.m_x, m_y - other.m_y);
+	}
+
+	public Point add(final Point other) {
+		return new Point(m_x + other.m_x, m_y + other.m_y);
+	}
+
+	public Point symmetry(final Point other) {
+		return other.add(other.difference(this));
+	}
+
 	@Override
 	public boolean equals(final Object o) {
 		if (this == o) return true;
