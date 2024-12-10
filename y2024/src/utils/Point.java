@@ -39,6 +39,15 @@ public class Point {
 		return other.add(other.difference(this));
 	}
 
+	public Point[] getAdjacent4() {
+		return new Point[] {
+				new Point(m_x, m_y - 1),
+				new Point(m_x + 1, m_y),
+				new Point(m_x, m_y + 1),
+				new Point(m_x - 1, m_y)
+		};
+	}
+
 	@Override
 	public boolean equals(final Object o) {
 		if (this == o) return true;
