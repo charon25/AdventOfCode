@@ -27,7 +27,7 @@ public class Problem10 {
 
 		System.out.println(trailheads.stream().mapToInt(trailhead -> countPaths(terrain, trailhead).getFirst()).sum());
 
-		// Part 1
+		// Part 2
 
 		System.out.println(trailheads.stream().mapToInt(trailhead -> countPaths(terrain, trailhead).getSecond()).sum());
 	}
