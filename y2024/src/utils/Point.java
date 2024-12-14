@@ -35,6 +35,10 @@ public class Point {
 		return new Point(m_x + other.m_x, m_y + other.m_y);
 	}
 
+	public Point times(final int scale) {
+		return new Point(m_x * scale, m_y * scale);
+	}
+
 	public Point symmetry(final Point other) {
 		return other.add(other.difference(this));
 	}

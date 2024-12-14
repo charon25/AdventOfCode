@@ -1,6 +1,8 @@
 package utils;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.function.BiConsumer;
 
 public final class IterUtils {
@@ -18,5 +20,9 @@ public final class IterUtils {
 				action.accept(objects.get(i), objects.get(j));
 			}
 		}
+	}
+
+	public static <K, V> void add(final Map<K, List<V>> map, final K key, final V value) {
+		map.computeIfAbsent(key, k -> new ArrayList<>()).add(value);
 	}
 }
