@@ -1,8 +1,13 @@
 package utils;
 
+import java.util.Comparator;
 import java.util.Objects;
 
 public class Point {
+
+	public static final Comparator<Point> X_COMPARATOR = Comparator.comparingInt(Point::getX);
+	public static final Comparator<Point> Y_COMPARATOR = Comparator.comparingInt(Point::getY);
+
 	private final int m_x;
 	private final int m_y;
 
