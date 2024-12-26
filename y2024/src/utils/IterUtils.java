@@ -25,4 +25,8 @@ public final class IterUtils {
 	public static <K, V> void add(final Map<K, List<V>> map, final K key, final V value) {
 		map.computeIfAbsent(key, k -> new ArrayList<>()).add(value);
 	}
+
+	public static <T> T getLast(final List<T> list) {
+		return list.get(list.size() - 1);
+	}
 }

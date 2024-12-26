@@ -57,6 +57,41 @@ public class Point {
 		};
 	}
 
+	public Point[] getAllPointsAtDistance(final int distance) {
+		if (distance == 0) return new Point[] {this};
+		if (distance == 1) return getAdjacent4();
+
+		final Point[] points = new Point[4 * distance];
+		Point point = new Point(m_x, m_y - distance);
+		points[0] = point;
+		int index = 1;
+		for (int i = 0; i < distance; i++) {
+			point = point.add(new Point(1, 1));
+			points[index] = point;
+			index++;
+		}
+
+		for (int i = 0; i < distance; i++) {
+			point = point.add(new Point(-1, 1));
+			points[index] = point;
+			index++;
+		}
+
+		for (int i = 0; i < distance; i++) {
+			point = point.add(new Point(-1, -1));
+			points[index] = point;
+			index++;
+		}
+
+		for (int i = 0; i < distance - 1; i++) {
+			point = point.add(new Point(1, -1));
+			points[index] = point;
+			index++;
+		}
+
+		return points;
+	}
+
 	@Override
 	public boolean equals(final Object o) {
 		if (this == o) return true;
