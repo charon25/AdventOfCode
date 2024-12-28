@@ -1,8 +1,6 @@
 package utils;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.function.BiConsumer;
 
 public final class IterUtils {
@@ -28,5 +26,21 @@ public final class IterUtils {
 
 	public static <T> T getLast(final List<T> list) {
 		return list.get(list.size() - 1);
+	}
+
+	public static <T> Set<T> union(final Set<T> set, final T element) {
+		final HashSet<T> union = new HashSet<>(set);
+		union.add(element);
+		return union;
+	}
+
+	public static <T> Set<T> intersection(final Set<T> set, final Collection<T> elements) {
+		final HashSet<T> intersection = new HashSet<>(Math.min(set.size(), elements.size()));
+		for (final T element : elements) {
+			if (set.contains(element)) {
+				intersection.add(element);
+			}
+		}
+		return intersection;
 	}
 }
