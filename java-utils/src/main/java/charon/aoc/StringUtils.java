@@ -16,6 +16,10 @@ public final class StringUtils {
 		}
 	}
 
+	public static boolean isDigit(final char character) {
+		return '0' <= character && character <= '9';
+	}
+
 
 	@FunctionalInterface
 	public interface CharConsumer {
