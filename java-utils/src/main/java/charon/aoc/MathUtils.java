@@ -1,4 +1,4 @@
-package charon.aoc.utils;
+package charon.aoc;
 
 public final class MathUtils {
 	private MathUtils() {}

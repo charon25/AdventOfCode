@@ -1,7 +1,7 @@
 package charon.aoc.problems01To10;
 
-import charon.aoc.utils.MathUtils;
-import charon.aoc.utils.FileUtils;
+import charon.aoc.FileUtils;
+import charon.aoc.MathUtils;
 
 import java.util.ArrayList;
 import java.util.Arrays;

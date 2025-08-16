@@ -1,8 +1,8 @@
 package charon.aoc.problems11To20;
 
-import charon.aoc.utils.FileUtils;
-import charon.aoc.utils.LongPoint;
-import charon.aoc.utils.Triplet;
+import charon.aoc.FileUtils;
+import charon.aoc.LongPoint;
+import charon.aoc.Triplet;
 
 import java.math.BigInteger;
 import java.util.ArrayList;

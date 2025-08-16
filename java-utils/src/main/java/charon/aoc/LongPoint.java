@@ -1,4 +1,4 @@
-package charon.aoc.utils;
+package charon.aoc;
 
 import java.util.Objects;
 

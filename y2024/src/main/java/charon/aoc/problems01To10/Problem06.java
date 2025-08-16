@@ -1,8 +1,8 @@
 package charon.aoc.problems01To10;
 
-import charon.aoc.utils.FileUtils;
-import charon.aoc.utils.Pair;
-import charon.aoc.utils.Point;
+import charon.aoc.FileUtils;
+import charon.aoc.Pair;
+import charon.aoc.Point;
 
 import java.util.HashSet;
 import java.util.List;

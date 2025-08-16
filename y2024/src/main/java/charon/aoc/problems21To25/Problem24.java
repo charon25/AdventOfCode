@@ -1,6 +1,6 @@
 package charon.aoc.problems21To25;
 
-import charon.aoc.utils.FileUtils;
+import charon.aoc.FileUtils;
 
 import java.util.*;
 import java.util.regex.Matcher;

@@ -1,6 +1,6 @@
 package charon.aoc.problems11To20;
 
-import charon.aoc.utils.*;
+import charon.aoc.*;
 
 import java.util.*;
 

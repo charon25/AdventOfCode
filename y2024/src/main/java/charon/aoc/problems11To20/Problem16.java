@@ -1,9 +1,9 @@
 package charon.aoc.problems11To20;
 
-import charon.aoc.utils.FileUtils;
-import charon.aoc.utils.Pair;
-import charon.aoc.utils.Point;
-import charon.aoc.utils.StringUtils;
+import charon.aoc.FileUtils;
+import charon.aoc.Pair;
+import charon.aoc.Point;
+import charon.aoc.StringUtils;
 
 import java.util.*;
 import java.util.concurrent.atomic.AtomicReference;

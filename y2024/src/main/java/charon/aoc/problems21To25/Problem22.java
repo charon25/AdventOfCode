@@ -1,7 +1,7 @@
 package charon.aoc.problems21To25;
 
-import charon.aoc.utils.FileUtils;
-import charon.aoc.utils.IterUtils;
+import charon.aoc.FileUtils;
+import charon.aoc.IterUtils;
 
 import java.util.ArrayList;
 import java.util.HashMap;

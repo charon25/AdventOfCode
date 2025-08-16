@@ -1,4 +1,4 @@
-package charon.aoc.utils;
+package charon.aoc;
 
 import java.util.Comparator;
 import java.util.Objects;

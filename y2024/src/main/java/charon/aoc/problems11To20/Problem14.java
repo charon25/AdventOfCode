@@ -1,7 +1,7 @@
 package charon.aoc.problems11To20;
 
-import charon.aoc.utils.FileUtils;
-import charon.aoc.utils.Point;
+import charon.aoc.FileUtils;
+import charon.aoc.Point;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
