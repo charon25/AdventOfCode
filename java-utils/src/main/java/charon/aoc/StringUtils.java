@@ -1,5 +1,6 @@
 package charon.aoc;
 
+import java.util.Arrays;
 import java.util.List;
 
 public final class StringUtils {
@@ -18,6 +19,12 @@ public final class StringUtils {
 
 	public static boolean isDigit(final char character) {
 		return '0' <= character && character <= '9';
+	}
+
+	public static List<Long> parseLongList(final String string) {
+		return Arrays.stream(string.strip().split(" "))
+				.map(Long::parseLong)
+				.toList();
 	}
 
 
