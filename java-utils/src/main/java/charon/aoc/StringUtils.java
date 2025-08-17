@@ -27,6 +27,12 @@ public final class StringUtils {
 				.toList();
 	}
 
+	public static List<Integer> parseIntList(final String string) {
+		return Arrays.stream(string.strip().split(" "))
+				.map(Integer::parseInt)
+				.toList();
+	}
+
 
 	@FunctionalInterface
 	public interface CharConsumer {

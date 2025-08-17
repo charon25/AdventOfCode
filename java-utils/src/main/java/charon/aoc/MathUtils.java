@@ -16,4 +16,21 @@ public final class MathUtils {
 		}
 		return result;
 	}
+
+	public static boolean isPerfectSquare(final int n) {
+		if (n < 0) return false;
+		if (n <= 1) return true;
+		int left = 1;
+		int right = n / 2;
+		while (left <= right) {
+			final long mid = (left + right) / 2;
+			final long square = mid * mid;
+			if (square <= n) {
+				left = (int) (mid + 1);
+			} else {
+				right = (int) (mid - 1);
+			}
+		}
+		return right * right == n;
+	}
 }
