@@ -33,4 +33,20 @@ public final class MathUtils {
 		}
 		return right * right == n;
 	}
+
+	public static long gcd(long a, long b) {
+		if (a == 0) return b;
+		if (b == 0) return a;
+		while (a > 0 && b > 0) {
+			final long max = Math.max(a, b);
+			final long min = Math.min(a, b);
+			a = max % min;
+			b = min;
+		}
+		return a + b;
+	}
+
+	public static long lcm(final long a, final long b) {
+		return a * (b / gcd(a, b));
+	}
 }

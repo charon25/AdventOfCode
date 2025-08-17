@@ -33,6 +33,11 @@ public final class StringUtils {
 				.toList();
 	}
 
+	public static char lastChar(final String string) {
+		if (string.isEmpty()) throw new IndexOutOfBoundsException("string is empty");
+		return string.charAt(string.length() - 1);
+	}
+
 
 	@FunctionalInterface
 	public interface CharConsumer {

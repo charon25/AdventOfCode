@@ -29,6 +29,7 @@ bin/
 .DS_Store
 
 AdventOfCode.iml
+java-utils.iml
 .idea/
 
 target
