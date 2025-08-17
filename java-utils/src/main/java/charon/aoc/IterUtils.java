@@ -43,4 +43,10 @@ public final class IterUtils {
 		}
 		return intersection;
 	}
+
+	public static <T> T getOrDefault(final List<T> list, final int index, final T defaultValue) {
+		if (index < 0) return defaultValue;
+		if (index >= list.size()) return defaultValue;
+		return list.get(index);
+	}
 }
