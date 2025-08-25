@@ -49,4 +49,12 @@ public final class IterUtils {
 		if (index >= list.size()) return defaultValue;
 		return list.get(index);
 	}
+
+	public static <T> boolean isConstant(final List<T> list, final T value) {
+		for (final T v : list) {
+			if (!Objects.equals(v, value)) return false;
+		}
+
+		return true;
+	}
 }
