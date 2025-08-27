@@ -52,6 +52,10 @@ public class LongPoint {
 		};
 	}
 
+	public long manhattanDistance(final LongPoint point) {
+		return Math.abs(m_x - point.m_x) + Math.abs(m_y - point.m_y);
+	}
+
 	@Override
 	public boolean equals(final Object o) {
 		if (this == o) return true;

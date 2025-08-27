@@ -8,6 +8,11 @@ public class Point {
 	public static final Comparator<Point> X_COMPARATOR = Comparator.comparingInt(Point::getX);
 	public static final Comparator<Point> Y_COMPARATOR = Comparator.comparingInt(Point::getY);
 
+	public static final Point UP = new Point(0, -1);
+	public static final Point DOWN = new Point(0, 1);
+	public static final Point LEFT = new Point(-1, 0);
+	public static final Point RIGHT = new Point(1, 0);
+
 	private final int m_x;
 	private final int m_y;
 
@@ -90,6 +95,10 @@ public class Point {
 		}
 
 		return points;
+	}
+
+	public int manhattanDistance(final Point point) {
+		return Math.abs(m_x - point.m_x) + Math.abs(m_y - point.m_y);
 	}
 
 	@Override
