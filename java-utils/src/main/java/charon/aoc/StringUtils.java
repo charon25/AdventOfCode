@@ -28,7 +28,11 @@ public final class StringUtils {
 	}
 
 	public static List<Integer> parseIntList(final String string) {
-		return Arrays.stream(string.strip().split(" "))
+		return parseIntList(string, " ");
+	}
+
+	public static List<Integer> parseIntList(final String string, final String delimiter) {
+		return Arrays.stream(string.strip().split(delimiter))
 				.map(Integer::parseInt)
 				.toList();
 	}
