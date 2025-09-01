@@ -31,5 +31,7 @@ bin/
 AdventOfCode.iml
 java-utils.iml
 .idea/
+profile.jfr
+.profileconfig.json
 
 target
