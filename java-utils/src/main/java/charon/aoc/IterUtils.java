@@ -2,6 +2,7 @@ package charon.aoc;
 
 import java.util.*;
 import java.util.function.BiConsumer;
+import java.util.function.Function;
 
 public final class IterUtils {
 	private IterUtils() {}
@@ -56,5 +57,20 @@ public final class IterUtils {
 		}
 
 		return true;
+	}
+
+	public static <T> void print2DArray(final T[][] array, final Function<T, Character> printer) {
+		final int height = array.length;
+		final int width = array[0].length;
+		final StringBuilder sb = new StringBuilder(height * (width + 1));
+
+		for (int y = 0; y < height; y++) {
+			for (int x = 0; x < width; x++) {
+				sb.append(printer.apply(array[y][x]));
+			}
+			sb.append('\n');
+		}
+
+		System.out.println(sb);
 	}
 }
