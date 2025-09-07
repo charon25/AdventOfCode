@@ -1,11 +1,9 @@
-package charon.aoc.problems1To10;
+package charon.aoc.problems01To10;
 
 import charon.aoc.FileUtils;
 
-import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
-import java.util.Map;
 
 public class Problem01 {
 	public static void main(String[] args) {

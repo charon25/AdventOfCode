@@ -1,4 +1,4 @@
-package charon.aoc.problems1To10;
+package charon.aoc.problems01To10;
 
 import charon.aoc.FileUtils;
 
