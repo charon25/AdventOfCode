@@ -21,6 +21,16 @@ public class Problem17 {
 		}
 
 		// Part 1
+		System.out.println(getMinHeatLoss(heatLosses, 1, 3));
+
+		// Part 2
+		System.out.println(getMinHeatLoss(heatLosses, 4, 10));
+	}
+
+	private static int getMinHeatLoss(final int[][] heatLosses, final int minStraightDistance, final int maxStraightDistance) {
+		final int height = heatLosses.length;
+		final int width = heatLosses[0].length;
+
 		final Point start = new Point(0, 0);
 		final Point target = new Point(width - 1, height - 1);
 
@@ -34,30 +44,32 @@ public class Problem17 {
 		while (!queue.isEmpty()) {
 			final State u = queue.poll();
 
-			if (u.point.equals(target)) {
-				System.out.println(u.distance);
-				break;
+			if (u.point.equals(target) && u.stepsCount >= minStraightDistance) {
+				return u.distance;
 			}
 
 			final Position position = u.getPosition();
 			if (visited.contains(position)) continue;
 			visited.add(position);
 
-			final Direction clockwise = Direction.CLOCKWISE.get(u.direction);
-			final Point clockwisePoint = u.point.add(clockwise.getVector());
-			if (clockwisePoint.isInBound(0, 0, width, height)) {
-				final int heatLoss = heatLosses[clockwisePoint.getY()][clockwisePoint.getX()];
-				queue.add(new State(clockwisePoint, u.distance + heatLoss, clockwise, 1));
+			if (u.stepsCount >= minStraightDistance) {
+				final Direction clockwise = Direction.CLOCKWISE.get(u.direction);
+				final Point clockwisePoint = u.point.add(clockwise.getVector());
+				if (clockwisePoint.isInBound(0, 0, width, height)) {
+					final int heatLoss = heatLosses[clockwisePoint.getY()][clockwisePoint.getX()];
+					queue.add(new State(clockwisePoint, u.distance + heatLoss, clockwise, 1));
+				}
+
+				final Direction counterClockwise = Direction.COUNTER_CLOCKWISE.get(u.direction);
+				final Point counterClockwisePoint = u.point.add(counterClockwise.getVector());
+				if (counterClockwisePoint.isInBound(0, 0, width, height)) {
+					final int heatLoss = heatLosses[counterClockwisePoint.getY()][counterClockwisePoint.getX()];
+					queue.add(new State(counterClockwisePoint, u.distance + heatLoss, counterClockwise, 1));
+				}
 			}
 
-			final Direction counterClockwise = Direction.COUNTER_CLOCKWISE.get(u.direction);
-			final Point counterClockwisePoint = u.point.add(counterClockwise.getVector());
-			if (counterClockwisePoint.isInBound(0, 0, width, height)) {
-				final int heatLoss = heatLosses[counterClockwisePoint.getY()][counterClockwisePoint.getX()];
-				queue.add(new State(counterClockwisePoint, u.distance + heatLoss, counterClockwise, 1));
-			}
 
-			if (u.stepsCount < 3) {
+			if (u.stepsCount < maxStraightDistance) {
 				final Point forward = u.point.add(u.direction.getVector());
 				if (forward.isInBound(0, 0, width, height)) {
 					final int heatLoss = heatLosses[forward.getY()][forward.getX()];
@@ -65,6 +77,8 @@ public class Problem17 {
 				}
 			}
 		}
+
+		throw new IllegalArgumentException("Could not reach the end with parameters " + minStraightDistance + ", " + maxStraightDistance);
 	}
 
 	private record State(Point point, int distance, Direction direction, int stepsCount) {
