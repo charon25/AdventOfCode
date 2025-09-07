@@ -1,6 +1,7 @@
 package charon.aoc;
 
 import java.util.Comparator;
+import java.util.List;
 import java.util.Objects;
 
 public class Point {
@@ -12,6 +13,9 @@ public class Point {
 	public static final Point DOWN = new Point(0, 1);
 	public static final Point LEFT = new Point(-1, 0);
 	public static final Point RIGHT = new Point(1, 0);
+	public static final List<Point> DIRECTIONS = List.of(UP, DOWN, LEFT, RIGHT);
+	public static final List<Point> VERTICAL_DIRECTIONS = List.of(UP, DOWN);
+	public static final List<Point> HORIZONTAL_DIRECTIONS = List.of(LEFT, RIGHT);
 
 	private final int m_x;
 	private final int m_y;
@@ -99,6 +103,14 @@ public class Point {
 
 	public int manhattanDistance(final Point point) {
 		return Math.abs(m_x - point.m_x) + Math.abs(m_y - point.m_y);
+	}
+
+	public boolean isVertical() {
+		return m_x == 0 && m_y != 0;
+	}
+
+	public boolean isHorizontal() {
+		return m_x != 0 && m_y == 0;
 	}
 
 	@Override
