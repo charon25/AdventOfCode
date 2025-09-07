@@ -1,16 +1,33 @@
 package charon.aoc.problems11To20;
 
+import charon.aoc.Direction;
 import charon.aoc.FileUtils;
-import charon.aoc.Point;
 
 import java.util.*;
 
+import static charon.aoc.Direction.*;
+
 public class Problem16 {
+
+	public static final Map<Direction, Direction> SLASH_MIRROR_MAP = Map.of(
+			UP, RIGHT,
+			RIGHT, UP,
+			DOWN, LEFT,
+			LEFT, DOWN
+	);
+
+	public static final Map<Direction, Direction> BACKSLASH_MIRROR_MAP = Map.of(
+			UP, LEFT,
+			RIGHT, DOWN,
+			DOWN, RIGHT,
+			LEFT, UP
+	);
+
 	public static void main(String[] args) {
 		final List<String> lines = FileUtils.readProblemInput(16);
 
 		// Part 1
-		final int energizeTiles = getEnergizeTiles(lines, new Ray(0, 0, Direction.RIGHT));
+		final int energizeTiles = getEnergizeTiles(lines, new Ray(0, 0, RIGHT));
 		System.out.println(energizeTiles);
 
 		// Part 2
@@ -19,12 +36,12 @@ public class Problem16 {
 
 		int maxEnergizeTiles = 0;
 		for (int y = 0; y < height; y++) {
-			maxEnergizeTiles = Math.max(maxEnergizeTiles, getEnergizeTiles(lines, new Ray(0, y, Direction.RIGHT)));
-			maxEnergizeTiles = Math.max(maxEnergizeTiles, getEnergizeTiles(lines, new Ray(width - 1, y, Direction.LEFT)));
+			maxEnergizeTiles = Math.max(maxEnergizeTiles, getEnergizeTiles(lines, new Ray(0, y, RIGHT)));
+			maxEnergizeTiles = Math.max(maxEnergizeTiles, getEnergizeTiles(lines, new Ray(width - 1, y, LEFT)));
 		}
 		for (int x = 0; x < width; x++) {
 			maxEnergizeTiles = Math.max(maxEnergizeTiles, getEnergizeTiles(lines, new Ray(x, 0, Direction.DOWN)));
-			maxEnergizeTiles = Math.max(maxEnergizeTiles, getEnergizeTiles(lines, new Ray(x, height - 1, Direction.UP)));
+			maxEnergizeTiles = Math.max(maxEnergizeTiles, getEnergizeTiles(lines, new Ray(x, height - 1, UP)));
 		}
 
 		System.out.println(maxEnergizeTiles);
@@ -47,24 +64,24 @@ public class Problem16 {
 			final Ray[] neighbors = switch (lines.get(ray.y).charAt(ray.x)) {
 				case '.' -> new Ray[] {ray.add(direction)};
 				case '/' -> {
-					final Direction nextDir = Direction.SLASH_MIRROR_MAP.get(direction);
+					final Direction nextDir = SLASH_MIRROR_MAP.get(direction);
 					yield new Ray[] {ray.add(nextDir)};
 				}
 				case '\\' -> {
-					final Direction nextDir = Direction.BACKSLASH_MIRROR_MAP.get(direction);
+					final Direction nextDir = BACKSLASH_MIRROR_MAP.get(direction);
 					yield new Ray[] {ray.add(nextDir)};
 				}
 				case '-' -> {
-					if (direction == Direction.LEFT || direction == Direction.RIGHT) {
+					if (direction == LEFT || direction == RIGHT) {
 						yield new Ray[] {ray.add(direction)};
 					}
-					yield new Ray[] {ray.add(Direction.LEFT), ray.add(Direction.RIGHT)};
+					yield new Ray[] {ray.add(LEFT), ray.add(RIGHT)};
 				}
 				case '|' -> {
-					if (direction == Direction.UP || direction == Direction.DOWN) {
+					if (direction == UP || direction == Direction.DOWN) {
 						yield new Ray[] {ray.add(direction)};
 					}
-					yield new Ray[] {ray.add(Direction.UP), ray.add(Direction.DOWN)};
+					yield new Ray[] {ray.add(UP), ray.add(Direction.DOWN)};
 				}
 				default -> throw new IllegalArgumentException("Unknown tile: " + lines.get(ray.y).charAt(ray.x));
 			};
@@ -83,41 +100,13 @@ public class Problem16 {
 				.count();
 	}
 
-	private enum Direction {
-		UP(Point.UP),
-		RIGHT(Point.RIGHT),
-		DOWN(Point.DOWN),
-		LEFT(Point.LEFT),
-		;
-
-		private static final Map<Direction, Direction> SLASH_MIRROR_MAP = Map.of(
-				UP, RIGHT,
-				RIGHT, UP,
-				DOWN, LEFT,
-				LEFT, DOWN
-		);
-
-		private static final Map<Direction, Direction> BACKSLASH_MIRROR_MAP = Map.of(
-				UP, LEFT,
-				RIGHT, DOWN,
-				DOWN, RIGHT,
-				LEFT, UP
-		);
-
-		private final Point m_vector;
-
-		Direction(final Point vector) {
-			m_vector = vector;
-		}
-	}
-
 	private record Ray(int x, int y, Direction direction) {
 		private boolean isInsideGrid(final int width, final int height) {
 			return x >= 0 && x < width && y >= 0 && y < height;
 		}
 
 		private Ray add(final Direction newDirection) {
-			return new Ray(x + newDirection.m_vector.getX(), y + newDirection.m_vector.getY(), newDirection);
+			return new Ray(x + newDirection.getVector().getX(), y + newDirection.getVector().getY(), newDirection);
 		}
 	}
 }
