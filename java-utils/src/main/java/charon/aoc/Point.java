@@ -113,6 +113,10 @@ public class Point {
 		return m_x != 0 && m_y == 0;
 	}
 
+	public LongPoint toLongPoint() {
+		return new LongPoint(m_x, m_y);
+	}
+
 	@Override
 	public boolean equals(final Object o) {
 		if (this == o) return true;

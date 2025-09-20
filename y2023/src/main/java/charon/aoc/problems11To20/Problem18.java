@@ -2,6 +2,7 @@ package charon.aoc.problems11To20;
 
 import charon.aoc.Direction;
 import charon.aoc.FileUtils;
+import charon.aoc.LongPoint;
 import charon.aoc.Point;
 
 import java.util.*;
@@ -14,7 +15,11 @@ public class Problem18 {
 			"U", Direction.UP,
 			"R", Direction.RIGHT,
 			"D", Direction.DOWN,
-			"L", Direction.LEFT
+			"L", Direction.LEFT,
+			"3", Direction.UP,
+			"0", Direction.RIGHT,
+			"1", Direction.DOWN,
+			"2", Direction.LEFT
 	);
 
 	public static void main(String[] args) {
@@ -57,6 +62,32 @@ public class Problem18 {
 		fillInterior(digged, inInterior.get(), minX, maxX, minY, maxY);
 
 		System.out.println(digged.size());
+
+		// Part 2 (Pick's theorem once again)
+		final List<LongPoint> vertices = new ArrayList<>(instructions.size() + 1);
+		LongPoint vertex = new LongPoint(0L, 0L);
+		vertices.add(vertex);
+		long totalDigged = 0;
+		for (final Instruction instruction : instructions) {
+			final int distance = Integer.parseInt(instruction.color.substring(0, instruction.color.length() - 1), 16);
+			totalDigged += distance;
+			final String lastDigit = instruction.color.substring(instruction.color.length() - 1);
+			vertex = vertex.add(DIRECTIONS_MAP.get(lastDigit).getVector().toLongPoint().times(distance));
+			vertices.add(vertex);
+		}
+
+		vertices.removeLast();
+
+		long area = vertices.getLast().getX() * vertices.getFirst().getY() - vertices.getLast().getY() * vertices.getFirst().getX();
+		for (int i = 0; i < vertices.size() - 1; i++) {
+			final LongPoint p1 = vertices.get(i);
+			final LongPoint p2 = vertices.get(i + 1);
+			area += (p1.getX() * p2.getY() - p1.getY() * p2.getX());
+		}
+		area = Math.abs(area) / 2;
+		totalDigged += area - totalDigged / 2 + 1;
+
+		System.out.println(totalDigged);
 
 	}
 
