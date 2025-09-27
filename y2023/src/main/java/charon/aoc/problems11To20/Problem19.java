@@ -1,11 +1,9 @@
 package charon.aoc.problems11To20;
 
 import charon.aoc.FileUtils;
+import charon.aoc.Interval;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -77,6 +75,52 @@ public class Problem19 {
 
 		final int totalRating = acceptedParts.stream().mapToInt(Part::totalRating).sum();
 		System.out.println(totalRating);
+
+		// Part 2
+		final Deque<PartInterval> partIntervals = new ArrayDeque<>();
+		partIntervals.add(PartInterval.starting());
+
+		long totalCombinations = 0L;
+		while (!partIntervals.isEmpty()) {
+			final PartInterval partInterval = partIntervals.pop();
+			if (partInterval.isEmpty()) continue;
+			if (REFUSE.equals(partInterval.workflowName)) continue;
+			if (ACCEPT.equals(partInterval.workflowName)) {
+				totalCombinations += partInterval.getCombinations();
+				continue;
+			}
+
+			final Workflow workflow = workflows.get(partInterval.workflowName);
+			final Interval[] intervals = partInterval.intervals.clone();
+			for (final Rule rule : workflow.rules) {
+				if (rule.index == Rule.DEFAULT_INDEX) {
+					partIntervals.add(new PartInterval(rule.destination, intervals));
+					continue;
+				}
+
+				final Interval interval = intervals[rule.index];
+				final Interval validInterval;
+				final Interval invalidInterval;
+				if (rule.greater) {
+					validInterval = new Interval(Math.max(rule.value + 1, interval.start()), interval.end());
+					invalidInterval = new Interval(interval.start(), Math.min(rule.value, interval.end()));
+				} else {
+					validInterval = new Interval(interval.start(), Math.min(rule.value - 1, interval.end()));
+					invalidInterval = new Interval(Math.max(rule.value, interval.start()), interval.end());
+				}
+
+				if (isIntervalNonEmpty(validInterval)) {
+					final Interval[] copy = intervals.clone();
+					copy[rule.index] = validInterval;
+					partIntervals.add(new PartInterval(rule.destination, copy));
+				}
+
+				intervals[rule.index] = invalidInterval;
+
+			}
+		}
+
+		System.out.println(totalCombinations);
 	}
 
 	private record Part(int[] ratings) {
@@ -115,5 +159,34 @@ public class Problem19 {
 			final int rating = part.ratings[index];
 			return greater ? rating > value : rating < value;
 		}
+	}
+
+	// End is inclusive
+	private record PartInterval(String workflowName, Interval[] intervals) {
+		private static PartInterval starting() {
+			final Interval interval = new Interval(1, 4000);
+			return new PartInterval(STARTING_WORKFLOW, new Interval[] {interval, interval, interval, interval});
+		}
+
+		private boolean isEmpty() {
+			for (final Interval interval : intervals) {
+				if (isIntervalNonEmpty(interval)) return false;
+			}
+
+			return true;
+		}
+
+		private long getCombinations() {
+			long combinations = 1L;
+			for (final Interval interval : intervals) {
+				combinations *= isIntervalNonEmpty(interval) ? (interval.end() - interval.start() + 1) : 0;
+			}
+
+			return combinations;
+		}
+	}
+
+	private static boolean isIntervalNonEmpty(final Interval interval) {
+		return interval.end() >= interval.start();
 	}
 }
