@@ -1,6 +1,7 @@
 package charon.aoc.problems01To10;
 
 import charon.aoc.FileUtils;
+import charon.aoc.Interval;
 import charon.aoc.StringUtils;
 
 import java.util.ArrayList;
@@ -46,7 +47,7 @@ public class Problem05 {
 			for (final AlmanacMap map : maps) {
 				intervals = splitIntervals(intervals, map.getAllRanges());
 			}
-			minLocation2 = Math.min(minLocation2, intervals.getFirst().start);
+			minLocation2 = Math.min(minLocation2, intervals.getFirst().start());
 		}
 
 		System.out.println(minLocation2);
@@ -56,15 +57,15 @@ public class Problem05 {
 		final List<Interval> newIntervals = new ArrayList<>(2 * intervals.size());
 
 		for (final Interval interval : intervals) {
-			long intervalStart = interval.start;
+			long intervalStart = interval.start();
 			for (final Range range : ranges) {
-				if (interval.start > range.sourceEnd()) continue;
-				if (intervalStart >= interval.end) break;
+				if (interval.start() > range.sourceEnd()) continue;
+				if (intervalStart >= interval.end()) break;
 				newIntervals.add(new Interval(
 						range.convert(Math.max(intervalStart, range.sourceStart)),
-						range.convert(Math.min(interval.end, range.sourceEnd()))
+						range.convert(Math.min(interval.end(), range.sourceEnd()))
 				));
-				intervalStart = Math.min(interval.end, range.sourceEnd());
+				intervalStart = Math.min(interval.end(), range.sourceEnd());
 			}
 		}
 
@@ -75,9 +76,9 @@ public class Problem05 {
 		for (int i = 1; i < newIntervals.size(); i++) {
 			final Interval interval = newIntervals.get(i);
 			final Interval previous = mergedInterval.getLast();
-			if (interval.start == previous.end) {
+			if (interval.start() == previous.end()) {
 				mergedInterval.removeLast();
-				mergedInterval.add(new Interval(previous.start, interval.end));
+				mergedInterval.add(new Interval(previous.start(), interval.end()));
 			} else {
 				mergedInterval.add(interval);
 			}
@@ -139,9 +140,5 @@ public class Problem05 {
 		private long sourceEnd() {
 			return sourceStart + length;
 		}
-	}
-
-	private record Interval(long start, long end) {
-		private static final Comparator<Interval> BY_START = Comparator.comparingLong(Interval::start);
 	}
 }
