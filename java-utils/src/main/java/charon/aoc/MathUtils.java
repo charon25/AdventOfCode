@@ -9,6 +9,7 @@ public final class MathUtils {
 			return 1;
 		}
 		if (base == 1) return 1;
+		if (base == 2) return 1L << exponent;
 
 		long result = base;
 		for (int i = 1; i < exponent; i++) {
