@@ -66,6 +66,19 @@ public class Point {
 		};
 	}
 
+	public Point[] getAdjacent8() {
+		return new Point[] {
+				new Point(m_x, m_y - 1),
+				new Point(m_x + 1, m_y - 1),
+				new Point(m_x + 1, m_y),
+				new Point(m_x + 1, m_y + 1),
+				new Point(m_x, m_y + 1),
+				new Point(m_x - 1, m_y + 1),
+				new Point(m_x - 1, m_y),
+				new Point(m_x - 1, m_y - 1)
+		};
+	}
+
 	public Point[] getAllPointsAtDistance(final int distance) {
 		if (distance == 0) return new Point[] {this};
 		if (distance == 1) return getAdjacent4();
@@ -127,7 +140,7 @@ public class Point {
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(m_x, m_y);
+		return 31 * m_x + m_y;
 	}
 
 	@Override
