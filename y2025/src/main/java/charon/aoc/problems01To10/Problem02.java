@@ -1,10 +1,10 @@
 package charon.aoc.problems01To10;
 
 import charon.aoc.FileUtils;
+import charon.aoc.InclusiveRange;
 import charon.aoc.MathUtils;
 
 import java.util.*;
-import java.util.stream.IntStream;
 import java.util.stream.LongStream;
 
 public class Problem02 {
@@ -14,14 +14,13 @@ public class Problem02 {
 	public static void main(String[] args) {
 		final List<String> lines = FileUtils.readProblemInput(2);
 
-		final List<Range> ranges = Arrays.stream(lines.get(0).split(","))
-				.map(line -> line.split("-"))
-				.map(parts -> new Range(Long.parseLong(parts[0]), Long.parseLong(parts[1])))
+		final List<InclusiveRange> ranges = Arrays.stream(lines.get(0).split(","))
+				.map(InclusiveRange::parse)
 				.toList();
 
 		// Part 1
 		long total = 0L;
-		for (final Range range : ranges) {
+		for (final InclusiveRange range : ranges) {
 			final int startLength = String.valueOf(range.start()).length();
 			final int endLength = String.valueOf(range.end()).length();
 			if (startLength == endLength && startLength % 2 == 1) continue;
@@ -68,7 +67,7 @@ public class Problem02 {
 		final ArrayList<Long> repeatingNumbersList = new ArrayList<>(repeatingNumbers);
 
 		long total2 = 0L;
-		for (final Range range : ranges) {
+		for (final InclusiveRange range : ranges) {
 			for (final long number : repeatingNumbersList) {
 				if (range.contains(number)) {
 					total2 += number;
@@ -79,10 +78,4 @@ public class Problem02 {
 		System.out.println(total2);
 	}
 
-	// Both inclusive
-	private record Range(long start, long end) {
-		private boolean contains(final long value) {
-			return start <= value && value <= end;
-		}
-	}
 }
