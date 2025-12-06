@@ -73,4 +73,17 @@ public final class IterUtils {
 
 		System.out.println(sb);
 	}
+
+	public static char[][] transpose(final char[][] array) {
+		final int height = array.length;
+		final int width = array[0].length;
+
+		final char[][] transposed = new char[width][height];
+		for (int y = 0; y < height; y++) {
+			for (int x = 0; x < width; x++) {
+				transposed[x][y] = array[y][x];
+			}
+		}
+		return transposed;
+	}
 }
