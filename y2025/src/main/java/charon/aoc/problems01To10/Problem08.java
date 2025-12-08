@@ -1,6 +1,7 @@
 package charon.aoc.problems01To10;
 
 import charon.aoc.FileUtils;
+import charon.aoc.IterUtils;
 import charon.aoc.Point3;
 
 import java.util.*;
@@ -13,13 +14,7 @@ public class Problem08 {
 		final List<Point3> boxes = lines.stream().map(line -> Point3.parse(line, ",")).toList();
 
 		// Part 1
-		final PriorityQueue<BoxesPair> minHeap = new PriorityQueue<>(BoxesPair.EUCLIDEAN_DISTANCE);
-		final int boxesCount = boxes.size();
-		for (int i = 0; i < boxesCount; i++) {
-			for (int j = i + 1; j < boxesCount; j++) {
-				minHeap.add(new BoxesPair(boxes.get(i), boxes.get(j)));
-			}
-		}
+		final PriorityQueue<BoxesPair> minHeap = getPairsMinHeap(boxes);
 
 		final int connections = 1000;
 		final Map<Point3, List<Point3>> graph = new HashMap<>();
@@ -31,9 +26,47 @@ public class Problem08 {
 			graph.computeIfAbsent(pair.p2, p -> new ArrayList<>()).add(pair.p1);
 		}
 
+		final List<Integer> circuitLengths = getCircuitLengths(graph);
+
+		final int product = circuitLengths.stream()
+				.sorted(Comparator.reverseOrder())
+				.limit(3)
+				.reduce(1, (a, b) -> a * b);
+
+		System.out.println(product);
+
+		// Part 2
+		final PriorityQueue<BoxesPair> minHeap2 = getPairsMinHeap(boxes);
+		while (!minHeap2.isEmpty()) {
+			final BoxesPair pair = minHeap2.poll();
+
+			graph.computeIfAbsent(pair.p1, p -> new ArrayList<>()).add(pair.p2);
+			graph.computeIfAbsent(pair.p2, p -> new ArrayList<>()).add(pair.p1);
+			final List<Integer> lengths = getCircuitLengths(graph);
+			if (lengths.size() == 1 && lengths.get(0) == boxes.size()) {
+				System.out.println((long) pair.p1.x() * pair.p2.x());
+				break;
+			}
+		}
+	}
+
+	private static PriorityQueue<BoxesPair> getPairsMinHeap(final List<Point3> boxes) {
+		final PriorityQueue<BoxesPair> minHeap = new PriorityQueue<>(BoxesPair.EUCLIDEAN_DISTANCE);
+		final int boxesCount = boxes.size();
+		for (int i = 0; i < boxesCount; i++) {
+			for (int j = i + 1; j < boxesCount; j++) {
+				minHeap.add(new BoxesPair(boxes.get(i), boxes.get(j)));
+			}
+		}
+		return minHeap;
+	}
+
+	private static List<Integer> getCircuitLengths(final Map<Point3, List<Point3>> graph) {
 		final List<Integer> circuitLengths = new ArrayList<>();
-		while (!graph.isEmpty()) {
-			final Point3 root = graph.keySet().iterator().next();
+		final Set<Point3> globalVisited = new HashSet<>();
+
+		for (final Point3 root : graph.keySet()) {
+			if (globalVisited.contains(root)) continue;
 			final Queue<Point3> queue = new ArrayDeque<>();
 			queue.add(root);
 			final Set<Point3> visited = new HashSet<>();
@@ -42,27 +75,20 @@ public class Problem08 {
 			int circuitLength = 0;
 			while (!queue.isEmpty()) {
 				final Point3 u = queue.poll();
+				globalVisited.add(u);
 				circuitLength++;
 
-				final List<Point3> connectedBoxes = graph.remove(u);
-				for (final Point3 v : connectedBoxes) {
+				for (final Point3 v : graph.get(u)) {
 					if (!visited.contains(v)) {
 						queue.add(v);
 						visited.add(v);
-						if (graph.containsKey(v)) graph.get(v).remove(u);
 					}
 				}
 			}
 
 			circuitLengths.add(circuitLength);
 		}
-
-		final int product = circuitLengths.stream()
-				.sorted(Comparator.reverseOrder())
-				.limit(3)
-				.reduce(1, (a, b) -> a * b);
-
-		System.out.println(product);
+		return circuitLengths;
 	}
 
 	private record BoxesPair(Point3 p1, Point3 p2) {

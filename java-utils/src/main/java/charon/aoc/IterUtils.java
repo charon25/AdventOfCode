@@ -86,4 +86,13 @@ public final class IterUtils {
 		}
 		return transposed;
 	}
+
+	public static int max(final Collection<Integer> collection) {
+		if (collection.isEmpty()) throw new IllegalArgumentException("Empty collection does not have max");
+		int max = Integer.MIN_VALUE;
+		for (final int value : collection) {
+			if (value > max) max = value;
+		}
+		return max;
+	}
 }
